@@ -1,7 +1,7 @@
 <h1 class="nombre-pagina">Login</h1>
-<p class="descripcion-pagina">Inicia session con tus datos</p>
+<p class="descripcion-pagina">Inicia sesión con tus datos</p>
 
-<form class="formulario" method="POST" action="/">
+<form class="formulario" method="POST" action="">
     <div class="campo">
         <label for="email">Email</label>
         <input 
@@ -22,7 +22,7 @@
         />
     </div>
 
-    <input type="submit" class="boton" name="" id="" value="Iniciar Sesion">
+    <input type="submit" class="boton" name="" id="" value="Iniciar Sesión">
 </form>
 
 <div class="acciones">
