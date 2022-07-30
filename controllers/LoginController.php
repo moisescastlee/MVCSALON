@@ -33,13 +33,33 @@ public static function crear(Router $router) {
 
       $usuario->sincronizar($_POST);
       $alertas = $usuario->validarNuevaCuenta();
-      debuguear($usuario);
+
+      
+
+      //Revisar que alerta este vacio
+      if(empty($alertas)) {
+         //Verificar que el usuario no este registrado
+         $resultado = $usuario->existeUsuario();
+         
+         if($resultado->num_rows){
+            $alertas = Usuario::getAlertas();
+         } else {
+            // hASHEAR el Password
+            $usuario->hashPassword();
+
+            //Generar token unico
+            $usuario->crearToken();
+
+
+            debuguear($usuario);
+         }
+      }
+     
    }
 
    $router->render('auth/crear-cuenta', [
       'usuario' => $usuario,
       'alertas' => $alertas
-
       ]);
    }
 }

@@ -1,9 +1,10 @@
 @use 'base/variables' as v;
 
 .alerta{
-    padding: calc(v.$separacion / 2);
+    padding: calc(v.$separacion / 4);
+    margin: 0 0 0 10rem;
     color: v.$blanco;
-    width: 100%;
+    width: 60%;
     display: block;
     margin-bottom:  2rem;
     text-align: center;

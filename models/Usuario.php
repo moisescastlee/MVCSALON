@@ -20,7 +20,6 @@ class Usuario extends ActiveRecord  {
     public $token;
 
     public function __construct($args = []) {
-
     
         $this->id = $args['id'] ?? null;
         $this->nombre = $args['nombre'] ?? '';
@@ -48,19 +47,36 @@ class Usuario extends ActiveRecord  {
             self::$alertas['error'][] = 'Escribe el email por favor';
         }
 
-        if(!$this->password) {
-            self::$alertas['error'][] = 'El password no es el mismo';
-        }
-
-        if(!$this->telefono) {
-            self::$alertas['error'][] = 'Escribe el telefono';
+        if(strlen($this->telefono) < 8) {
+            self::$alertas['error'][] = 'Escribe el telefono completo';
         }
 
         if(strlen($this->password) < 6) {
-            self::$alertas['error'][] = 'El password es obligatorio';
+            self::$alertas['error'][] = 'El password debe contener al menos 6 caracteres';
         }
 
         return self::$alertas;
+
+    }
+    //Revisa si el usuario ya existe
+    public function existeUsuario(){
+        $query = "SELECT * FROM " . self::$tabla . " WHERE email = '" . $this->email . "' LIMIT 1";
+
+        $resultado = self::$db->query($query);
+        
+        if($resultado->num_rows){
+            self::$alertas['exito'][] = 'El usuario ya esta registrado!';
+        } 
+
+        return $resultado;
+    }
+
+    public function hashPassword()  {
+        $this->password = password_hash($this->password, PASSWORD_BCRYPT);
+    }
+
+    public function crearToken()    {
+        $this->token = uniqid();
     }
     
 }
