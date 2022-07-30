@@ -33,7 +33,7 @@ public static function crear(Router $router) {
 
       $usuario->sincronizar($_POST);
       $alertas = $usuario->validarNuevaCuenta();
-
+      debuguear($usuario);
    }
 
    $router->render('auth/crear-cuenta', [
