@@ -1,6 +1,7 @@
 <?php 
 namespace Controllers;
 
+use Classes\Email;
 use Model\Usuario;
 use MVC\Router;
 
@@ -34,15 +35,15 @@ public static function crear(Router $router) {
       $usuario->sincronizar($_POST);
       $alertas = $usuario->validarNuevaCuenta();
 
-      
-
       //Revisar que alerta este vacio
       if(empty($alertas)) {
          //Verificar que el usuario no este registrado
          $resultado = $usuario->existeUsuario();
          
          if($resultado->num_rows){
+
             $alertas = Usuario::getAlertas();
+
          } else {
             // hASHEAR el Password
             $usuario->hashPassword();
@@ -50,16 +51,36 @@ public static function crear(Router $router) {
             //Generar token unico
             $usuario->crearToken();
 
+            //enviar el email
+            $email = new Email($usuario->nombre, $usuario->email, $usuario->token);
+            
+            $email->enviarConfirmacion();
 
-            debuguear($usuario);
+            // debuguear($usuario);
+            //Crear el usuario
+            $resultado = $usuario->guardar();
+            
+            if($resultado) {
+               header('Location: /mensaje');
+            }
+           
          }
       }
-     
    }
 
    $router->render('auth/crear-cuenta', [
       'usuario' => $usuario,
       'alertas' => $alertas
+      
+   ]);
+}
+
+   public static function mensaje(Router $router) {
+
+      $router->render('auth/mensaje', [
+         
       ]);
    }
+
+
 }
