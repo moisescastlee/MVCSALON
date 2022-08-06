@@ -61,7 +61,7 @@ public static function crear(Router $router) {
             $resultado = $usuario->guardar();
             
             if($resultado) {
-               header('Location: /mensaje');
+               header('Location:/public/mensaje');
             }
            
          }
@@ -76,9 +76,31 @@ public static function crear(Router $router) {
 }
 
    public static function mensaje(Router $router) {
+      $router->render('auth/mensaje');
+   }
 
-      $router->render('auth/mensaje', [
-         
+   public static function confirmar(Router $router) {
+
+      $alertas = [];
+      $token = s($_GET['token']);
+      $usuario = Usuario::where('token', $token);
+      
+      if(empty($usuario)){
+
+         //Mostrar mensaje de error
+         Usuario::setAlerta('error', 'Token No Valido!');
+
+      } else {
+
+         //Modificar a usuario confirmado
+         echo "Token Valido, confirmado...!";
+
+      }
+
+      $alertas = Usuario::getAlertas();
+
+      $router->render('auth/confirmar-cuenta', [
+         'alertas' => $alertas
       ]);
    }
 

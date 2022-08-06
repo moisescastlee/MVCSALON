@@ -2,4 +2,4 @@
 
 <p class="descripcion-pagina">Hemos enviado las instrucciones para confirmar tu cuenta a tu correo</p>
 
-<a href="localhost:3000/public/">Volver</a>
+<a class="boton boton-verde" href="/public/">Volver</a>

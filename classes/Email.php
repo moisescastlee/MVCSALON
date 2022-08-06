@@ -29,7 +29,7 @@ class Email {
         $mail->Port = 2525;
 
 
-        $mail->setFrom('Moises Castillo');
+        $mail->setFrom('el_moises_05@hotmail.com');
         $mail->addAddress('cuentas@appsalon.com', 'AppSalon.com');
         $mail->Subject = 'Confirma tu cuenta';
 
@@ -39,7 +39,7 @@ class Email {
 
         $contenido = "<html>";
         $contenido .= "<p><strong>Hola " . $this->nombre . "</strong> Has creado tu cuenta en App Salon, solo debes confirmarla presionando el siguiente enlace</p>";
-        $contenido .= "<p>Presiona aquí: <a href='http://locahost:3000/confirmar-cuenta?token=" . $this->token . "'>Confirmar Cuenta</a> </p>";
+        $contenido .= "<p>Presiona aquí: <a href='http://localhost:3000/public/confirmar-cuenta?token=" . $this->token . "'>Confirmar Cuenta</a> </p>";
         $contenido .= "<p>Si tu no solicitaste este cambio, puedes ignorar este mensaje </p>";
         $contenido .= "</html>";
         $mail->Body = $contenido;
