@@ -6,8 +6,20 @@ use Model\Usuario;
 use MVC\Router;
 
 class LoginController {
+
    public static function login(Router $router) {
-      $router->render('auth/login');
+      $alertas = [];
+      
+
+      if($_SERVER['REQUEST_METHOD'] === 'POST') {
+         $auth = new Usuario($_POST);
+         $alertas = $auth->validarLogin();
+         
+      }
+
+      $router->render('auth/login', [
+         'alertas' => $alertas
+      ]);
   }
 
  public static function logout() {
@@ -87,21 +99,28 @@ public static function crear(Router $router) {
       
       if(empty($usuario)){
 
-         //Mostrar mensaje de error
+      //Mostrar mensaje de error
          Usuario::setAlerta('error', 'Token No Valido!');
 
       } else {
 
-         //Modificar a usuario confirmado
-         echo "Token Valido, confirmado...!";
+      //Modificar a usuario confirmado
+         $usuario->confirmado = "1";
+         $usuario->token = null;
+         $usuario->guardar();
+         Usuario::setAlerta('exito', 'Comprobada correctamente!');
 
       }
 
+      //Obetener las vistas
       $alertas = Usuario::getAlertas();
 
+      //Renderizar la vista
       $router->render('auth/confirmar-cuenta', [
          'alertas' => $alertas
       ]);
+
+
    }
 
 
