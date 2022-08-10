@@ -91,5 +91,19 @@ class Usuario extends ActiveRecord  {
         $this->token = uniqid();
         
     }
-    
+
+    public function comprobarPasswordAndVerificado($password){
+
+        $resultado = password_verify($password, $this->password);
+        
+        if(!$resultado || !$this->confirmado) {
+          
+            self::$alertas['error'][] = 'Password Incorrecto o tu cuenta no esta confirmada';
+            
+        } else {
+            return true;
+            debuguear("return");
+        } 
+    }
+            
 }

@@ -13,7 +13,7 @@ include_once __DIR__ . "/../templates/alertas.php";
              id="email"
              placeholder="Tu email"
              name="email"
-             
+             value="<?php echo s($auth->email); ?>"
         />
     </div>
 

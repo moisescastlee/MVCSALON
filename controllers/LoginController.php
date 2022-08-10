@@ -8,17 +8,55 @@ use MVC\Router;
 class LoginController {
 
    public static function login(Router $router) {
+
       $alertas = [];
-      
+      $auth = new Usuario;
 
       if($_SERVER['REQUEST_METHOD'] === 'POST') {
          $auth = new Usuario($_POST);
          $alertas = $auth->validarLogin();
-         
+
+      if(empty($alertas)) {
+      // Comprobar que exista el usuario
+         $usuario = Usuario::where('email', $auth->email);
+
+      if($usuario){
+         // Verifica el password
+          if ($usuario->comprobarPasswordAndverificado($auth->password)) {
+            
+            session_start();
+            
+            $_SESSION['id'] = $usuario->id;
+            $_SESSION['nombre'] = $usuario->nombre . " " . $usuario->apellido;
+            $_SESSION['email'] = $usuario->email;
+            $_SESSION['login'] = true;
+
+            //redireccionamiento
+            if($usuario->admin === "1") {
+
+               $_SESSION['admin'] = $usuario->admin ?? null;
+
+               header('Location: /public/admin');
+
+            } else {
+
+               header('Location: /public/cita');
+            }
+
+            debuguear($_SESSION);
+          }
+
+      } else {
+         Usuario::setAlerta('error', 'Usuario no encontrado');
+           }
+         }
       }
 
+      $alertas = Usuario::getAlertas();
+
       $router->render('auth/login', [
-         'alertas' => $alertas
+         'alertas' => $alertas,
+         'auth' => $auth
       ]);
   }
 
@@ -75,7 +113,6 @@ public static function crear(Router $router) {
             if($resultado) {
                header('Location:/public/mensaje');
             }
-           
          }
       }
    }
@@ -119,9 +156,5 @@ public static function crear(Router $router) {
       $router->render('auth/confirmar-cuenta', [
          'alertas' => $alertas
       ]);
-
-
    }
-
-
 }
