@@ -42,8 +42,6 @@ class LoginController {
 
                header('Location: /public/cita');
             }
-
-            debuguear($_SESSION);
           }
 
       } else {
@@ -64,13 +62,41 @@ class LoginController {
     echo "Desde logOUT";
  }
 
+
  public static function olvide(Router $router) {
-    $router->render('auth/olvide-cuenta', [
 
-    ]);
- }
+   $alertas = [];
 
- public static function recuperar() {
+   if($_SERVER['REQUEST_METHOD'] === 'POST') {
+      
+      $auth = New Usuario($_POST);
+      $alertas = $auth->comprobarEmail();
+
+   if(empty($alertas)){
+         $usuario = Usuario::where('email', $auth->email);
+         
+
+         if($usuario && $usuario->confirmado === "1") {
+            $usuario->crearToken();
+            debuguear($usuario);
+            
+         } else {
+
+            Usuario::setAlerta('error', 'Este usuario no existe o no esta confirmado');
+
+            $alertas = Usuario::getAlertas();
+         }
+      }
+   }
+
+   $router->render('auth/olvide-cuenta', [
+      'alertas' => $alertas
+       ]);
+   }
+
+
+
+public static function recuperar() {
    echo "Desde recuperar";
 }
 
@@ -87,6 +113,7 @@ public static function crear(Router $router) {
 
       //Revisar que alerta este vacio
       if(empty($alertas)) {
+
          //Verificar que el usuario no este registrado
          $resultado = $usuario->existeUsuario();
          

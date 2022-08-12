@@ -105,5 +105,13 @@ class Usuario extends ActiveRecord  {
             debuguear("return");
         } 
     }
+
+    public function comprobarEmail (){
+
+        if(!$this->email){
+            self::$alertas['error'][] = 'El email es obligatorio';
+        } 
+        return self::$alertas;
+    }
             
 }
