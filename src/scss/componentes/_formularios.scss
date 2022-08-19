@@ -23,7 +23,13 @@
         flex: 1;
         border: none;
         padding: calc( v.$separacion / 4);
-        border-radius: 5px;
+        border-radius: 3px;
+
+        &:disabled{
+            background-color: lighten(v.$negro, 30%);
+            color: v.$blanco;
+            cursor: not-allowed;
+        }
         
     }
 }

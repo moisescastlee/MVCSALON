@@ -127,9 +127,9 @@ class Usuario extends ActiveRecord  {
         
         if(!$uppercase || !$lowercase || !$number || !$specialChars || strlen($this->password) < 8) {
             self::$alertas['error'][] = 'Tu password debe de tener 8 caracteres';
-        } else {
-            self::$alertas['exito'][] = 'Clave fuerte!';
-        } return self::$alertas;
+        } 
+        
+        return self::$alertas;
     }
             
 }

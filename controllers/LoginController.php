@@ -79,7 +79,6 @@ class LoginController {
          
 
       if($usuario && $usuario->confirmado === "1") {
-         
          //Generar un token
          $usuario->crearToken();
          $usuario->guardar();
@@ -123,18 +122,21 @@ public static function recuperar(Router $router) {
       $password = new Usuario($_POST);
       $alertas = $password->validarPassword();
 
-      if(empty($alertas))  {
-
+   if(empty($alertas))  {
          $usuario->password = null;
          $usuario->password = $password->password;
+         $usuario->hashPassword();
+         $usuario->token = null;
 
-         debuguear($usuario);
-      }
-      
-   }
-
+         $resultado = $usuario->guardar();
+         
+         if($resultado){
+            Usuario::setAlerta('exito', 'Password Aztualizado correctamente');
+            header('Refresh: 3; url=/public/');
+         }
+        }
+       }
   // debuguear($usuario);
-   
    $alertas = Usuario::getAlertas();
    $router->render('auth/recuperar-password', [
       'alertas' => $alertas,
@@ -226,5 +228,4 @@ public static function confirmar(Router $router) {
          'alertas' => $alertas
       ]);
    }
-
 }

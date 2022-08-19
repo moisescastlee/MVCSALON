@@ -18,7 +18,6 @@ include_once __DIR__ . "/../templates/alertas.php";
         name="password"
         placeholder="Tu Nuevo Password"
         />
-
         
     </div>
 
