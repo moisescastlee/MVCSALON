@@ -5,6 +5,6 @@ include_once __DIR__ . "/../templates/alertas.php";
 ?>
 
 <div class="acciones">
-    <a href="/public/">Inicia Seccion</a>
+    <a href="/">Inicia Seccion</a>
    
 </div>

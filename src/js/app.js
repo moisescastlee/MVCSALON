@@ -1,12 +1,21 @@
 let paso = 1;
+const PasoInicial = 1;
+const PasoFinal = 3;
+
 
 document.addEventListener('DOMContentLoaded', function(){
     iniciarApp();
 });
 
 function iniciarApp() {
-    mostrarSeccion();
-    tabs(); //Primera function creada "Cambia la seccion cuando se presionen los tabs"
+    mostrarSeccion(); // Muestra y oculta las secciones
+    tabs(); //Cambia la seccion cuando se presionen los tabs
+    botonesPaginador();//Agrega o quita botones del paginador
+    paginaSiguiente();
+    paginaAnterior();
+    
+
+    consultarAPI();//Consulta la api en el backend de PHP;
 }
 
 function mostrarSeccion() {
@@ -33,13 +42,76 @@ function mostrarSeccion() {
 }
 
 function tabs() {
+    
     const botones = document.querySelectorAll('.tabs button');
 
     botones.forEach( boton => {
-    boton.addEventListener('click', function(e){
+    boton.addEventListener('click', function(e) {
         paso = parseInt( e.target.dataset.paso );
-       mostrarSeccion();
+       
+        mostrarSeccion();
+       botonesPaginador();
      });
-    })
+    });
     
+}
+
+  function botonesPaginador() {
+    
+    const paginaAnterior = document.querySelector('#anterior');
+    const paginaSiguiente = document.querySelector('#siguiente');
+    
+    if(paso === 1){
+        paginaAnterior.classList.add('ocultar');
+        paginaSiguiente.classList.remove('ocultar');
+    } else if (paso === 3) {
+        paginaAnterior.classList.remove('ocultar');
+        paginaSiguiente.classList.add('ocultar');
+    } else {
+        paginaAnterior.classList.remove('ocultar');
+        paginaSiguiente.classList.remove('ocultar');
+    }   
+    
+    mostrarSeccion();
+
+} 
+
+function paginaAnterior(){
+    
+    const paginaAnterior = document.querySelector('#anterior');
+      paginaAnterior.addEventListener('click', function() {
+        
+        if(paso <= PasoInicial) return;
+        
+        paso--;
+
+        botonesPaginador();
+      });
+}
+
+function paginaSiguiente(){
+    
+    const paginaSiguiente = document.querySelector('#siguiente');
+      paginaSiguiente.addEventListener('click', function() {
+        
+        if(paso >= PasoFinal) return;
+
+        paso++;
+        
+        botonesPaginador();
+      });
+}
+
+async function consultarAPI(){
+
+    try {
+        const url = 'http://localhost:3000/api/servicios';
+        const resultado = await fetch(url);
+        const servicios = await resultado.json();
+        console.log(servicios);
+
+    } catch (error) {
+        console.log(error);
+    }
+
 }

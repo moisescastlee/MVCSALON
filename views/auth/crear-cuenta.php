@@ -66,6 +66,6 @@ include_once __DIR__ . "/../templates/alertas.php";
 
 <div class="acciones">
 
-<a href="/public/">Ya tienes una cuenta?</a>
-<a href="/public/olvide">Olvide mi password!</a>
+<a href="/">Ya tienes una cuenta?</a>
+<a href="olvide">Olvide mi password!</a>
 </div>

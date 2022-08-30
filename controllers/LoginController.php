@@ -36,11 +36,11 @@ class LoginController {
 
                $_SESSION['admin'] = $usuario->admin ?? null;
 
-               header('Location: /public/admin');
+               header('Location: admin');
 
             } else {
 
-               header('Location: /public/cita');
+               header('Location: cita');
             }
           }
 
@@ -132,7 +132,7 @@ public static function recuperar(Router $router) {
          
          if($resultado){
             Usuario::setAlerta('exito', 'Password Aztualizado correctamente');
-            header('Refresh: 3; url=/public/');
+            header('Refresh: 3; url=/');
          }
         }
        }
@@ -182,7 +182,7 @@ public static function crear(Router $router) {
             $resultado = $usuario->guardar();
             
             if($resultado) {
-               header('Location:/public/mensaje');
+               header('Location:mensaje');
             }
          }
       }
