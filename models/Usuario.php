@@ -116,16 +116,16 @@ class Usuario extends ActiveRecord  {
 
     public function validarPassword(){
 
-        $uppercase = preg_match('@[A-Z]@', $this->password);
-        $lowercase = preg_match('@[a-z]@', $this->password);
-        $number = preg_match('@[0-9]@', $this->password);
+        //$uppercase = preg_match('@[A-Z]@', $this->password);
+        //$lowercase = preg_match('@[a-z]@', $this->password);
+        //$number = preg_match('@[0-9]@', $this->password);
         $specialChars = preg_match('@[^\w]@', $this->password);
 
         if(!$this->password){
             self::$alertas['error'][] = 'El password es obligatorio';
         }
         
-        if(!$uppercase || !$lowercase || !$number || !$specialChars || strlen($this->password) < 8) {
+        if(!$specialChars || strlen($this->password) < 2) {
             self::$alertas['error'][] = 'Tu password debe de tener 8 caracteres';
         } 
         
