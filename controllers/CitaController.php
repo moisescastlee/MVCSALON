@@ -6,7 +6,7 @@ use Model\Usuario;
 
 class CitaController {
 
-    public static function index(Router $router){
+public static function index(Router $router){
         
         $router->render('cita/index', [
             'nombre' => $_SESSION['nombre']

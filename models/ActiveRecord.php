@@ -11,26 +11,25 @@ class ActiveRecord {
     protected static $alertas = [];
     
     // Definir la conexión a la BD - includes/database.php
-    public static function setDB($database) {
+public static function setDB($database) {
         self::$db = $database;
     }
-
-    public static function setAlerta($tipo, $mensaje) {
+public static function setAlerta($tipo, $mensaje) {
         static::$alertas[$tipo][] = $mensaje;
     }
 
     // Validación
-    public static function getAlertas() {
+public static function getAlertas() {
         return static::$alertas;
     }
 
-    public function validar() {
+public function validar() {
         static::$alertas = [];
         return static::$alertas;
     }
 
     // Consulta SQL para crear un objeto en Memoria
-    public static function consultarSQL($query) {
+public static function consultarSQL($query) {
         // Consultar la base de datos
         $resultado = self::$db->query($query);
 
@@ -57,11 +56,10 @@ class ActiveRecord {
             }
         }
 
-        return $objeto;
-    }
+        return $objeto;}
 
     // Identificar y unir los atributos de la BD
-    public function atributos() {
+public function atributos() {
         $atributos = [];
         foreach(static::$columnasDB as $columna) {
             if($columna === 'id') continue;
@@ -71,7 +69,7 @@ class ActiveRecord {
     }
 
     // Sanitizar los datos antes de guardarlos en la BD
-    public function sanitizarAtributos() {
+public function sanitizarAtributos() {
         $atributos = $this->atributos();
         $sanitizado = [];
         foreach($atributos as $key => $value ) {
@@ -81,7 +79,7 @@ class ActiveRecord {
     }
 
     // Sincroniza BD con Objetos en memoria
-    public function sincronizar($args=[]) { 
+public function sincronizar($args=[]) { 
         foreach($args as $key => $value) {
           if(property_exists($this, $key) && !is_null($value)) {
             $this->$key = $value;
@@ -90,7 +88,7 @@ class ActiveRecord {
     }
 
     // Registros - CRUD
-    public function guardar() {
+public function guardar() {
         $resultado = '';
         if(!is_null($this->id)) {
             // actualizar
@@ -103,35 +101,35 @@ class ActiveRecord {
     }
 
     // Todos los registros
-    public static function all() {
+public static function all() {
         $query = "SELECT * FROM " . static::$tabla;
         $resultado = self::consultarSQL($query);
         return $resultado;
     }
 
     // Busca un registro por su id
-    public static function find($id) {
+public static function find($id) {
         $query = "SELECT * FROM " . static::$tabla  ." WHERE id = ${id}";
         $resultado = self::consultarSQL($query);
         return array_shift( $resultado ) ;
     }
 
     // Obtener Registros con cierta cantidad
-    public static function get($limite) {
+public static function get($limite) {
         $query = "SELECT * FROM " . static::$tabla . " LIMIT ${limite}";
         $resultado = self::consultarSQL($query);
         return array_shift( $resultado ) ;
     }
 
    // Busca un registro por su id
-    public static function where($columna, $valor) {
+public static function where($columna, $valor) {
         $query = "SELECT * FROM " . static::$tabla  ." WHERE ${columna} = '${valor}'";
         $resultado = self::consultarSQL($query);
         return array_shift( $resultado ) ;
     }
 
     // crea un nuevo registro
-    public function crear() {
+public function crear() {
         // Sanitizar los datos
         $atributos = $this->sanitizarAtributos();
 
@@ -151,7 +149,7 @@ class ActiveRecord {
     }
 
     // Actualizar el registro
-    public function actualizar() {
+public function actualizar() {
         // Sanitizar los datos
         $atributos = $this->sanitizarAtributos();
         // Iterar para ir agregando cada campo de la BD

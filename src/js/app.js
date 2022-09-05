@@ -23,6 +23,8 @@ function iniciarApp() {
     
 
     consultarAPI();//Consulta la api en el backend de PHP;
+    nombreCliente(); //Añade el nombre del cliente al objeto de cita
+    seleccionarFecha(); //A;ade la fecha del cliente al objeto de cita
 }
 
 function mostrarSeccion() {
@@ -173,4 +175,40 @@ function seleccionarServicio(servicio) {
     }
             
      console.log(cita);
+}
+
+function nombreCliente(){
+    cita.nombre = document.querySelector('#nombre').value;
+
+
+}
+
+function seleccionarFecha(){
+    const inputFecha = document.querySelector('#fecha');
+    inputFecha.addEventListener('input', function(e) {
+        
+        const dia = new Date(e.target.value).getUTCDay();
+        
+        if( [6, 0].includes(dia) ){
+            e.target,value = '';
+            mostrarAlerta('Fines de Semana Cerrado', 'error');
+        } else {
+            cita.fecha = e.target.value;
+        }
+    });
+}
+
+function mostrarAlerta(mensaje, tipo){
+    const alerta = document.createElement('DIV');
+    alerta.textContent = mensaje;
+    alerta.classList.add('alerta');
+    alerta.classList.add(tipo);
+
+    ///////////////Elegir a donde va la alerta de ERROR o EXITO///////////
+    const seccion = document.querySelector('#paso-2 p');
+    seccion.appendChild(alerta);
+
+    setTimeout(() => {
+        alerta.remove();
+    }, 3000);
 }

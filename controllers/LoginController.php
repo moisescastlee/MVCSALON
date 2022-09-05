@@ -7,7 +7,7 @@ use MVC\Router;
 
 class LoginController {
 
-   public static function login(Router $router) {
+public static function login(Router $router) {
 
       $alertas = [];
       $auth = new Usuario;
@@ -143,7 +143,6 @@ public static function recuperar(Router $router) {
       'error' => $error
    ]);
 }
-
 public static function crear(Router $router) {
 
    $usuario = new Usuario($_POST);
@@ -194,7 +193,6 @@ public static function crear(Router $router) {
       
    ]);
 }
-
 public static function mensaje(Router $router) {
       $router->render('auth/mensaje');
    }

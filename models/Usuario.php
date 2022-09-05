@@ -19,7 +19,7 @@ class Usuario extends ActiveRecord  {
     public $confirmado;
     public $token;
 
-    public function __construct($args = []) {
+public function __construct($args = []) {
     
         $this->id = $args['id'] ?? null;
         $this->nombre = $args['nombre'] ?? '';
@@ -33,7 +33,7 @@ class Usuario extends ActiveRecord  {
 
     }
 
-    public function validarNuevaCuenta() {
+public function validarNuevaCuenta() {
         
         if(!$this->nombre) {
             self::$alertas['error'][] = 'El nombre es Obligatorio';
@@ -59,7 +59,7 @@ class Usuario extends ActiveRecord  {
 
     }
 
-    public function validarLogin(){
+public function validarLogin(){
         
         if(!$this->email){
             self::$alertas['error'][] = 'El email es obligatorio';
@@ -71,7 +71,7 @@ class Usuario extends ActiveRecord  {
         return self::$alertas;
     }
     //Revisa si el usuario ya existe
-    public function existeUsuario(){
+public function existeUsuario(){
         $query = "SELECT * FROM " . self::$tabla . " WHERE email = '" . $this->email . "' LIMIT 1";
 
         $resultado = self::$db->query($query);
@@ -83,16 +83,16 @@ class Usuario extends ActiveRecord  {
         return $resultado;
     }
 
-    public function hashPassword()  {
+public function hashPassword()  {
         $this->password = password_hash($this->password, PASSWORD_BCRYPT);
     }
 
-    public function crearToken()    {
+public function crearToken()    {
         $this->token = uniqid();
         
     }
 
-    public function comprobarPasswordAndVerificado($password){
+public function comprobarPasswordAndVerificado($password){
 
         $resultado = password_verify($password, $this->password);
         
@@ -106,7 +106,7 @@ class Usuario extends ActiveRecord  {
         } 
     }
 
-    public function comprobarEmail (){
+public function comprobarEmail (){
 
         if(!$this->email){
             self::$alertas['error'][] = 'El email es obligatorio';
@@ -114,7 +114,7 @@ class Usuario extends ActiveRecord  {
         return self::$alertas;
     }
 
-    public function validarPassword(){
+public function validarPassword(){
 
         //$uppercase = preg_match('@[A-Z]@', $this->password);
         //$lowercase = preg_match('@[a-z]@', $this->password);
@@ -132,4 +132,6 @@ class Usuario extends ActiveRecord  {
         return self::$alertas;
     }
             
+
+
 }
