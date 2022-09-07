@@ -25,6 +25,8 @@ function iniciarApp() {
     consultarAPI();//Consulta la api en el backend de PHP;
     nombreCliente(); //Añade el nombre del cliente al objeto de cita
     seleccionarFecha(); //A;ade la fecha del cliente al objeto de cita
+    seleccionarHora(); //Añade la hora de la cita en el proyecto
+    mostrarResumen();
 }
 
 function mostrarSeccion() {
@@ -58,8 +60,11 @@ function tabs() {
     boton.addEventListener('click', function(e) {
         paso = parseInt( e.target.dataset.paso );
        
-        mostrarSeccion();
-       botonesPaginador();
+         mostrarSeccion();
+         botonesPaginador();
+        
+        mostrarResumen();
+            
      });
     });
     
@@ -76,6 +81,8 @@ function botonesPaginador() {
     } else if (paso === 3) {
         paginaAnterior.classList.remove('ocultar');
         paginaSiguiente.classList.add('ocultar');
+
+        mostrarResumen();
     } else {
         paginaAnterior.classList.remove('ocultar');
         paginaSiguiente.classList.remove('ocultar');
@@ -184,31 +191,67 @@ function nombreCliente(){
 }
 
 function seleccionarFecha(){
+    //Con esta funcion podemos selccionar fechar especificas
     const inputFecha = document.querySelector('#fecha');
     inputFecha.addEventListener('input', function(e) {
         
         const dia = new Date(e.target.value).getUTCDay();
         
         if( [6, 0].includes(dia) ){
-            e.target,value = '';
-            mostrarAlerta('Fines de Semana Cerrado', 'error');
+            e.target.value = '';
+            mostrarAlerta('Fines de Semana Cerrado', 'error', '.formulario');
         } else {
             cita.fecha = e.target.value;
         }
     });
 }
 
-function mostrarAlerta(mensaje, tipo){
+function seleccionarHora(){
+    const inputHora = document.querySelector('#hora');
+    inputHora.addEventListener('input', function(e) {
+        
+
+        const horaCita = e.target.value;
+        const hora = horaCita.split(":")[0];
+        if(hora < 9 || hora > 20 ){
+            e.target.value = '';
+            mostrarAlerta('Esta cerrado!', 'error', '.formulario');
+        } else {
+            cita.hora = e.target.value;
+        }
+
+    });
+}
+
+function mostrarAlerta(mensaje, tipo, elemento, desaparece = true){
+    const alertaPrevia = document.querySelector('.alerta');
+    if(alertaPrevia){
+        alertaPrevia.remove();
+    }
+
+
     const alerta = document.createElement('DIV');
     alerta.textContent = mensaje;
     alerta.classList.add('alerta');
     alerta.classList.add(tipo);
 
     ///////////////Elegir a donde va la alerta de ERROR o EXITO///////////
-    const seccion = document.querySelector('#paso-2 p');
-    seccion.appendChild(alerta);
+    const referencia = document.querySelector(elemento);
+    referencia.appendChild(alerta);
 
-    setTimeout(() => {
-        alerta.remove();
-    }, 3000);
+    if(desaparece){
+        setTimeout(() => {
+            alerta.remove();
+        }, 3000);
+    }
+}
+
+function mostrarResumen(){
+    const resumen = document.querySelector('.contenido-resumen');
+    
+    if(Object.values(cita).includes('') || cita.servicios.length === 0 ) {
+        mostrarAlerta('Hacen falta datos', 'error', '.contenido-resumen', false);
+    } else {
+        console.log('TODO BIEN!');
+    }
 }
