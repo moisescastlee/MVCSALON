@@ -248,10 +248,63 @@ function mostrarAlerta(mensaje, tipo, elemento, desaparece = true){
 
 function mostrarResumen(){
     const resumen = document.querySelector('.contenido-resumen');
+    //Limpiar el contenido de resumen
+
+    while(resumen.firstChild){
+        resumen.removeChild(resumen.firstChild);
+    }
     
     if(Object.values(cita).includes('') || cita.servicios.length === 0 ) {
         mostrarAlerta('Hacen falta datos', 'error', '.contenido-resumen', false);
-    } else {
-        console.log('TODO BIEN!');
-    }
+        return;
+    }   
+
+    // colocar informacion en resumen de cita.
+    const {nombre, fecha, hora, servicios } = cita;
+
+    //encabezado para los servicios seleccionados en resumen
+    const headingServicios = document.createElement('H3');
+    headingServicios.textContent = 'Resumen de Servicios';
+    resumen.appendChild(headingServicios);
+
+    // Mostrando toda la informacion selecccionada en el resumen
+    servicios.forEach(servicio => {
+        const { id, precio, nombre } = servicio;
+        const contenedorServicio = document.createElement('DIV');
+        contenedorServicio.classList.add('contenedor-servicio');
+
+        const textoServicio = document.createElement('P');
+        textoServicio.textContent = nombre;
+
+        const precioServicio = document.createElement('P');
+        precioServicio.innerHTML = `<span>Precio:</span> $${precio}`;
+
+        contenedorServicio.appendChild(textoServicio);
+        contenedorServicio.appendChild(precioServicio);
+
+        resumen.appendChild(contenedorServicio);
+
+    });
+
+    //colocar informacion encima de los datos
+    const headingDatos = document.createElement('H3');
+    headingDatos.textContent = 'Informacion del cliente';
+    resumen.appendChild(headingDatos);
+
+    const nombreCliente = document.createElement('P');
+    nombreCliente.innerHTML = `<span>Nombre:</span> ${nombre}`;
+
+    const fechaCita = document.createElement('P');
+    fechaCita.innerHTML = `<span>Fecha:</span> ${fecha}`;
+
+    const horaCita = document.createElement('P');
+    horaCita.innerHTML = `<span>Hora:</span> ${hora}`;
+
+    resumen.appendChild(nombreCliente);
+    resumen.appendChild(fechaCita);
+    resumen.appendChild(horaCita);
+
+    console.log(nombreCliente);
+
+
 }

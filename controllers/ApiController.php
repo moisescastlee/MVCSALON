@@ -10,6 +10,4 @@ class ApiController {
         $ApiServicio = ApiServicio::all();
         echo json_encode($ApiServicio);
     }
-
-
 }
