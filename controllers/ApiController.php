@@ -10,4 +10,12 @@ class ApiController {
         $ApiServicio = ApiServicio::all();
         echo json_encode($ApiServicio);
     }
+
+    public static function guardar(){
+        $respuesta = [
+            'mensaje' => 'Muy bien!'
+        ];
+
+        echo json_encode($respuesta);
+    }
 }
