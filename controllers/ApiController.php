@@ -2,6 +2,7 @@
 
 namespace Controllers;
 use Model\ApiServicio;
+use Model\Cita;
 use MVC\Router;
 
 class ApiController {
@@ -12,10 +13,10 @@ class ApiController {
     }
 
     public static function guardar(){
-        $respuesta = [
-            'mensaje' => 'Muy bien!'
-        ];
+        $cita = new Cita($_POST);
 
-        echo json_encode($respuesta);
+        $resultado = $cita->guardar();
+
+        echo json_encode($resultado);
     }
 }
