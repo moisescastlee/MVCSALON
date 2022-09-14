@@ -1,5 +1,7 @@
 <?php
-namespace Model;
+namespace model;
+
+use Model\ActiveRecord;
 
 class Cita extends ActiveRecord {
     // Base de datos
