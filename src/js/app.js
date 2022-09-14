@@ -29,6 +29,7 @@ function iniciarApp() {
     seleccionarFecha(); //A;ade la fecha del cliente al objeto de cita
     seleccionarHora(); //Añade la hora de la cita en el proyecto
     mostrarResumen();
+    cerrarsesion();
 }
 
 function mostrarSeccion() {
@@ -350,12 +351,12 @@ async function reservarCita(){
 
     try {
         const url = 'http://localhost:3000/api/citas'
-    const respuesta = await fetch(url, {
+const respuesta = await fetch(url, {
         method: 'POST',
         body: datos
     });
 
-    const resultado = await respuesta.json();
+const resultado = await respuesta.json();
     console.log(resultado.resultado);
 
     if(resultado.resultado){
@@ -365,7 +366,6 @@ async function reservarCita(){
             text: 'Tu cita fue enviada correctamente',
             button: 'OK'
           }).then( () => {
-            
             setTimeout(() => {
                 window.location.reload();
             }, 2000);
@@ -378,7 +378,10 @@ async function reservarCita(){
             text: 'Hubo un error al guardar la cita!'
           })
     }
-    
-
-    
 } 
+
+function cerrarsesion(){
+   
+        
+
+}

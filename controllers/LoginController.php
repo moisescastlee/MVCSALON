@@ -60,12 +60,14 @@ public static function login(Router $router) {
       ]);
   }
 
- public static function logout() {
-    echo "Desde logOUT";
- }
+public static function logout() {
+    session_start();
+    $_SESSION = [];
+    header('Location: /');
+   }
 
 
- public static function olvide(Router $router) {
+public static function olvide(Router $router) {
 
    $alertas = [];
 
@@ -77,7 +79,6 @@ public static function login(Router $router) {
       if(empty($alertas)){
          $usuario = Usuario::where('email', $auth->email);
          
-
       if($usuario && $usuario->confirmado === "1") {
          //Generar un token
          $usuario->crearToken();
@@ -141,8 +142,7 @@ public static function recuperar(Router $router) {
    $router->render('auth/recuperar-password', [
       'alertas' => $alertas,
       'error' => $error
-   ]);
-}
+   ]);}
 public static function crear(Router $router) {
 
    $usuario = new Usuario($_POST);
@@ -191,8 +191,7 @@ public static function crear(Router $router) {
       'usuario' => $usuario,
       'alertas' => $alertas
       
-   ]);
-}
+   ]);}
 public static function mensaje(Router $router) {
       $router->render('auth/mensaje');
    }
