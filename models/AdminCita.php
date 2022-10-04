@@ -1,7 +1,9 @@
 <?php
 
 namespace Model;
-class AdminCita extends ActiveRecord{
+
+class AdminCita extends ActiveRecord {
+    
     protected static $tabla = 'citasservicios';
     protected static $columnasDB = ['id', 'hora', 'cliente', 'email', 'telefono', 'servicio', 'precio'];
 
