@@ -19,15 +19,17 @@ include_once __DIR__ . "/../templates/barra.php";
     </form>
 </div>
 
+<?php
+    if(count($citas) === 0) {
+        echo "<h3>No hay citas en esta Fecha</h3>";
+    }
+?>
+
 <div id="citas-admin">
-
     <ul class="citas">
-
-    <?php 
-
-        $idCita = 0;
-        foreach( $citas as $key => $cita ) {
-
+        <?php 
+            $idCita = 0;
+            foreach( $citas as $key => $cita ) {
             if($idCita !== $cita->id) {    
             $total = 0;
          ?>
@@ -43,19 +45,18 @@ include_once __DIR__ . "/../templates/barra.php";
 
             <?php 
                 $idCita = $cita->id; 
-                                        }
+                                   }
                 $total += $cita->precio;
-                    ?>
+            ?>
+                
                 <p class="servicio"><?php echo $cita->servicio . " " . $cita->precio; ?></p>
        
             <?php
-            
                  $actual = $cita->id;
                  $proximo = $citas[$key + 1]->id ?? 0;
-            
             if(esUltimo($actual, $proximo)) { ?>
                 <p class="total">Total: <span>$ <?php echo $total; ?></p>
-                
+
            <?php                    } 
                                 }// termina el foreach
                             ?>

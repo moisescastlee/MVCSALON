@@ -8,8 +8,16 @@ use MVC\Router;
 class AdminController {
     public static function index( Router $router ) {
         isAuth();
+        
+       $fecha = $_GET['fecha'] ?? date('Y-m-d');
+       $fechas = explode('-', $fecha);
 
-        $fecha = date('Y-m-d');
+
+       if( !checkdate( $fechas[1], $fechas[2], $fechas[0]) ){ 
+            header('Location: /404');
+       }
+
+       
        
 
         //consultar la base de datos
