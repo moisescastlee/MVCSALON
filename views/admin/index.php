@@ -57,14 +57,17 @@ include_once __DIR__ . "/../templates/barra.php";
             if(esUltimo($actual, $proximo)) { ?>
                 <p class="total">Total: <span>$ <?php echo $total; ?></p>
 
-           <?php                    } 
-                                }// termina el foreach
-                            ?>
+                <form action="/api/eliminar" method="POST">
+                    <input type="hidden" name="id" value="<?php echo $cita->id; ?>">
+                    <input type="submit" class="boton-eliminar" value="Eliminar">
+                </form>
+
+           <?php } 
+            }// termina el foreach?>
     </ul>
     
 </div>
 
 <?php 
     $script = "<script src='build/js/buscador.js'></script>"
-
 ?>

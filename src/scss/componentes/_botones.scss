@@ -6,3 +6,8 @@
     border-radius: 3px;
     
 }
+
+.boton-eliminar{
+    @include m.boton(v.$rojo, v.$blanco);
+    border-radius: 3px;
+}
