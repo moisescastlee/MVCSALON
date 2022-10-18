@@ -30,6 +30,7 @@ function iniciarApp() {
     seleccionarHora(); //Añade la hora de la cita en el proyecto
     mostrarResumen();
     cerrarsesion();
+    servicioscrear();
 }
 
 function mostrarSeccion() {
@@ -383,5 +384,10 @@ const resultado = await respuesta.json();
 function cerrarsesion(){
    
         
+
+}
+
+function servicioscrear(){
+    const AlertaServicios = document.querySelector('.alertaservicios');
 
 }

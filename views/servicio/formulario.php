@@ -5,6 +5,7 @@
     id="nombre"
     placeholder="Nombre Servicio"
     name="nombre"
+    value="<?php echo $apiservicio->nombre; ?>"
     />
 </div>
 
@@ -15,5 +16,6 @@
     id="precio"
     placeholder="Precio"
     name="precio"
+    value="<?php echo $apiservicio->precio; ?>"
     />
 </div>
