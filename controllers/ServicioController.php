@@ -44,10 +44,15 @@ public static function crear (Router $router){
 
 
 public static function actualizar (Router $router){
+    
 
     if($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     }
+
+    $router->render('servicio/actualizar', [
+        'nombre' => $_SESSION['nombre']
+    ]);
 }
 
 public static function eliminar (Router $router){

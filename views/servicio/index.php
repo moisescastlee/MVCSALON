@@ -8,11 +8,18 @@
 
 <ul     class="servicios">
     <?php foreach($apiservicio as $apiservicios) { ?>
-
         <li>
             <p>Nombre: <span> <?php echo $apiservicios->nombre; ?></span> </p>
             <p>Precio: <span> <?php echo $apiservicios->precio; ?></span> </p>
-        </li>
 
+        <div class="acciones">
+        <a class="boton" href="/servicios/actualizar">Actualizar</a>
+
+        <form action="/servicios/eliminar" method="POST">
+        <input type="hidden" name="id" value="<?php echo $apiservicios->id; ?>">
+        <input type="submit" value="Borrar" class="boton-eliminar">
+                </form>
+            </div>
+        </li>
     <?php } ?>
 </ul>
