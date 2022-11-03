@@ -44,6 +44,11 @@ public static function crear (Router $router){
 
 
 public static function actualizar (Router $router){
+
+    $id = is_numeric($_GET['id']);
+    if(!$id) return;
+    $apiservicio =  ApiServicio::find($id);
+    $alertas = [];
     
 
     if($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -51,7 +56,9 @@ public static function actualizar (Router $router){
     }
 
     $router->render('servicio/actualizar', [
-        'nombre' => $_SESSION['nombre']
+        'nombre' => $_SESSION['nombre'],
+        'alertas' => $alertas,
+        'apiservicio' => $apiservicio
     ]);
 }
 

@@ -13,11 +13,11 @@
             <p>Precio: <span> <?php echo $apiservicios->precio; ?></span> </p>
 
         <div class="acciones">
-        <a class="boton" href="/servicios/actualizar">Actualizar</a>
+             <a class="boton" href="/servicios/actualizar?id=<?php echo $apiservicios->id; ?>">Actualizar</a>
 
-        <form action="/servicios/eliminar" method="POST">
-        <input type="hidden" name="id" value="<?php echo $apiservicios->id; ?>">
-        <input type="submit" value="Borrar" class="boton-eliminar">
+        <form action="/servicio/eliminar" method="POST">
+            <input type="hidden" name="id" value="<?php echo $apiservicios->id; ?>">
+            <input type="submit" value="Borrar" class="boton-eliminar">
                 </form>
             </div>
         </li>
