@@ -21,7 +21,9 @@ public function get($url, $fn){
         // Arreglo de rutas protegidas...
         // $rutas_protegidas = ['/admin', '/propiedades/crear', '/propiedades/actualizar', '/propiedades/eliminar', '/vendedores/crear', '/vendedores/actualizar', '/vendedores/eliminar'];
         // $auth = $_SESSION['login'] ?? null;
-        $currentUrl = $_SERVER['PATH_INFO'] ?? '/';
+        
+        
+        $currentUrl = $_SERVER['REQUEST_URI'] === '' ? '/' : $_SERVER ['REQUEST_URI'];
         $method = $_SERVER['REQUEST_METHOD'];
         if ($method === 'GET') {
             $fn = $this->getRoutes[$currentUrl] ?? null;

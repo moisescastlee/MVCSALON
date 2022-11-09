@@ -1,2 +1,10 @@
-node_modules
-.vscode
+node_modules/
+.vscode/
+src/
+vendor/
+gulpfile.js/
+package.json/
+package-lock.json/
+.DS_Store/
+.env/
+
